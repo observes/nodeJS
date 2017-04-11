@@ -1,0 +1,10 @@
+<%- include header.ejs %>
+    <h2>用户个人信息</h2>
+    <p>用户名：<input type="text" disabled value="<%= userMsg.name%>" name="name"></p>
+    <p> 用户信息<input type="text" disabled value="<%= userMsg.email%>" name="email"></p>
+    <!-- 我发布的文章-->
+    <h2>我发布的文章</h2>
+    <% posts.forEach(function(post,index) { %>
+            <p><a href="/article/<%= post._id %>"><%= post.title %></a>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;日期：<%= post.time.day %></p>
+    <% }) %>
+<%- include footer.ejs %>

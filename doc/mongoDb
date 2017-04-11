@@ -1,0 +1,22 @@
+mongoDb 命令
+1  show dbs 所有数据库信息
+2  use 数据库名字   使用和新建数据库
+3 db 查看数据当场数据库
+4 show collections  显示当前的集合
+5 db.集合名.find({}); 查找数据 $gt>   $lt<  {$or:[]} 或者 sort({"value":-1/1}),排序
+6 db.集合名.insert({});插入一条数据
+7 db.dropDatabase(); 删除当前数据库
+8 db.集合名.drop(); 删除集合
+db.restaurants.update（{}，{$set:{}}//,多条数据{ multi: true}） // 更新数据
+db.restaurants.update（{}，{}//,多条数据{ multi: true}） //完整更新
+db.restaurants.remove( { "borough": "Queens" } //只删除一条数据, { justOne: true } )
+9 mongoimport --db  数据库 --collection 集合名词 --drop --file xx.json; 导入数据库
+
+
+<%- include header.ejs%>
+<form >
+    用户名：<input type="text" name="name"><br />
+    密 码：<input type="password" name="password"><br />
+    <input type="submit" value="登陆">
+</form>
+<%- include footer.ejs%>

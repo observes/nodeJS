@@ -1,0 +1,17 @@
+<%- include header.ejs  %>
+
+<p>
+    <span><a href="/edit/<%- posts._id %>" class="edit">编辑</a></span>
+    <span><a href="/edit/<%- posts._id %>" class="edit">删除</a></span>
+</p>
+<p>
+    <h2>
+        <a href="/article/<%- posts._id %>"><%- posts.title %></a>
+    </h2>
+</p>
+<p class="info">
+    作者：<%- posts.name %>
+    日期：<%- posts.time.day %>
+</p>
+<p><%- posts.post %></p>
+<%- include footer.ejs%>

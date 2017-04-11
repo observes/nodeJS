@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Basic Handler | Jcrop Demo</title>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.Jcrop.js"></script>
+<script type="text/javascript">
+  jQuery(function($){
+    var jcrop_api;
+    $('#target').Jcrop({
+      onChange:   showCoords,
+      onSelect:   showCoords,
+      onRelease:  clearCoords
+    },function(){
+      jcrop_api = this;
+    });
+    $('#coords').on('change','input',function(e){
+      var x1 = $('#x1').val(),
+          x2 = $('#x2').val(),
+          y1 = $('#y1').val(),
+          y2 = $('#y2').val();
+      jcrop_api.setSelect([x1,y1,x2,y2]);
+    });
+  });
+  function showCoords(c)
+  {
+    $('#x1').val(c.x);
+    $('#y1').val(c.y);
+    $('#x2').val(c.x2);
+    $('#y2').val(c.y2);
+    $('#w').val(c.w);
+    $('#h').val(c.h);
+  }
+
+  function clearCoords()
+  {
+    $('#coords input').val('');
+  }
+</script>
+<link rel="stylesheet" href="/css/jquery.Jcrop.css" type="text/css" />
+</head>
+<body>
+<div class="container-fluid">
+      <div class="row">
+            <div class="span12">
+                    <!-- This is the image we're attaching Jcrop to -->
+                    <img src="/img/1.jpg" id="target" alt="[Jcrop Example]" />
+                    <!-- This is the form that our event handler fills -->
+                        <form id="coords" class="coords" action="/cutPig" method="get">
+                          <div class="inline-labels">
+                                  <label>X1 <input type="text" size="4" id="x1" name="x1" /></label>
+                                  <label>Y1 <input type="text" size="4" id="y1" name="y1" /></label>
+                                  <label>X2 <input type="text" size="4" id="x2" name="x2" /></label>
+                                  <label>Y2 <input type="text" size="4" id="y2" name="y2" /></label>
+                                  <label>W <input type="text" size="4" id="w" name="w" /></label>
+                                  <label>H <input type="text" size="4" id="h" name="h" /></label>
+                                     <input type="submit" value="提交">
+                          </div>
+                        </form>
+                      <div class="clearfix"></div>
+                  </div>
+            </div>
+      </div>
+</div>
+</body>
+</html>
+

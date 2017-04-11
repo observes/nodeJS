@@ -1,0 +1,12 @@
+<%- include header.ejs%>
+<form action="/updata/<%= post.id %>" method="post">
+    标题 <br />
+    <input type="text" name="title" value="<%= post.title %>" disabled><br/>
+    正文<br>
+    <textarea cols="100" rows="20" name="post">
+        <%- post.post%>
+    </textarea>
+    <br>
+    <input type="submit"  value="保存修改" />
+</form>
+<%- include footer.ejs%>

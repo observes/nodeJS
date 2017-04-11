@@ -1,0 +1,14 @@
+<%- include header.ejs %>
+     <% posts.forEach(function(post,index) { %>
+         <p>
+              <h2>
+                    <a href="/article/<%= post._id %>"><%= post.title %></a>
+               </h2>
+         </p>
+          <p class="info">
+               作者：<%= post.name %>
+               日期：<%= post.time.day %>
+          </p>
+          <p><%- post.post %></p>
+     <% }) %>
+<%- include footer.ejs %>
