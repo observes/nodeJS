@@ -5,7 +5,6 @@ const  getAllDirctory =function(callback){
         if(err){
             throw  err;
         }
-        //console.log(files);
         var  allAlbums =[];
         (function iterator(i){
             if(i==files.length){

@@ -7,7 +7,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>数据展示</title>
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,28 +22,28 @@
     <div class="container-fluid">
         <!--文件显示-->
         <div class="row">
-            <% for(var i=0;i<recordList.length;i++){ %>
-            <div class="panel panel-default col-lg-3  col-sm-6">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><%= recordList[i].teacherField %></h3>
+            <% for(var i=0;i<data.recordList.length;i++){ %>
+                <div class="panel panel-default col-lg-3  col-sm-6">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><%= data.recordList[i].teacherField %></h3>
+                    </div>
+                    <div class="panel-body">
+                        <%- data.recordList[i].teacherContent %>
+                        <%= data.recordList[i].teacherType %>
+                        <%= data.recordList[i].id %>
+                        <p><%= data.recordList[i].teacherField %></p>
+                        <p><%= data.recordList[i].teacherName %></p>
+                        <p><%= data.recordList[i].teacherTitle %></p>
+                        <%- data.recordList[i].teacherAchievement %>
+                        <img src="<%= data.recordList[i].teacherImg %>" alt="">
+                        <img src="<%= data.recordList[i].teacherHeadImg %>" alt="">
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <%- recordList[i].teacherContent %>
-                    <%= recordList[i].teacherType %>
-                    <%= recordList[i].id %>
-                    <p><%= recordList[i].teacherField %></p>
-                    <p><%= recordList[i].teacherName %></p>
-                    <p><%= recordList[i].teacherTitle %></p>
-                    <%- recordList[i].teacherAchievement %>
-                    <img src="<%= recordList[i].teacherImg %>" alt="">
-                    <img src="<%= recordList[i].teacherHeadImg %>" alt="">
-                </div>
-            </div>
             <% } %>
         </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
