@@ -1,9 +1,50 @@
-<%- include header.ejs%>
-<form action="/reg" method="post" enctype="application/x-www-form-urlencoded">
-    用户名：<input type="text" name="name"><br />
-    密码：<input type="password" name="password"><br />
-    确认密码：<input type="password" name="password-repeat"><br />
-     邮箱：<input type="email" name="email"><br />
-    <input type="submit" value="注册">
-</form>
-<%- include footer.ejs%>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title><%= title %></title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<%- include nav.ejs %>
+    <div class="container ">
+        <div class="row">
+            <form action="/reg" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="form-group col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputEmail1">用户名：</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="name" >
+            </div>
+            <div class="form-group col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputPassword1">密码：</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+            <div class="form-group col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputPassword2">确认密码：</label>
+                <input type="password" class="form-control" id="exampleInputPassword2" name="password-repeat">
+            </div>
+            <div class="form-group col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputPassword3"> 邮箱：</label>
+                <input type="email" class="form-control" id="exampleInputPassword3" name="email">
+            </div>
+           <div class="form-group col-md-6 col-sm-12 col-md-offset-3">
+               <button type="submit" class="btn btn-primary">注册</button>
+            </div>
+        </form>
+        </div>
+        <%- include footer.ejs %>
+    </div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

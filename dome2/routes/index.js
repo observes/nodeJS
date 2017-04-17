@@ -1,8 +1,8 @@
 var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post=require('../models/post.js');
+var Comment=require('../models/comment.js');
 var multer  = require('multer');
-var markdowm  =require('markdown').markdown;
 var path =require('path');
 var fs =require('fs');
 var upload = multer({
@@ -10,13 +10,20 @@ var upload = multer({
 });
 module.exports =function(app){
     app.get('/',function(req,res){
-        Post.get(null,function(err,posts){
+        var page = req.query.page? parseInt(req.query.page):1;
+        var pageNum =3;
+        Post.get(null,page,pageNum,function(err,posts,total){
             res.render('index',{
                 title:'主页',
                 user:req.session.user,
                 success:req.flash('success').toString(),
                 error:req.flash('error').toString(),
-                posts:posts
+                posts:posts,
+                page:page,
+                isFirstPage:(page-1)==0,
+                isLastPage:(((page-1)*pageNum)+posts.length)==total,
+                total:Math.ceil(total/pageNum),
+                current:0
             })
         });
     });
@@ -26,7 +33,8 @@ module.exports =function(app){
             title:'注册',
             user:req.session.user,
             success:req.flash('success').toString(),
-            error:req.flash('error').toString()
+            error:req.flash('error').toString(),
+            current:1
         })
     });
     app.post("/reg",ckeckNotLogin);
@@ -69,7 +77,8 @@ module.exports =function(app){
             title:'登陆',
             user:req.session.user ,
             success:req.flash('success').toString(),
-            error:req.flash('error').toString()
+            error:req.flash('error').toString(),
+            current:2
         })
     });
     app.post('/login',ckeckNotLogin);
@@ -97,7 +106,8 @@ module.exports =function(app){
             title:'发表',
             user:req.session.user,
             success:req.flash('success').toString(),
-            error:req.flash('error').toString()
+            error:req.flash('error').toString(),
+            current:3
         })
     });
     app.post('/post',ckeckLogin);
@@ -124,12 +134,12 @@ module.exports =function(app){
     });
     app.get('/upload',ckeckLogin);
     app.get('/upload',function(req,res){
-        console.log();
         res.render('upload',{
             title:'文件上传',
             user:req.session.user,
             success:req.flash('success').toString(),
-            error:req.flash('error').toString()
+            error:req.flash('error').toString(),
+            current:4
         })
     });
     app.post('/upload',upload.array('file', 3),function(req,res){
@@ -144,17 +154,19 @@ module.exports =function(app){
             }
         }
         req.flash("suceess",'文件上传成功');
-        res.redirect('/upload');
+        res.redirect('/');
     });
     app.get('/u/:name',ckeckLogin);
     app.get('/u/:name',function(req,res){
+        var page = req.query.page? parseInt(req.query.page):1;
+        var pageNum =4;
         var user = req.params['name'];
         User.get(user,function(err,result){
             if(err){
                 throw err;
             }
             if(result.length){
-                Post.get(user,function(err,docs){
+                Post.get(user,page,pageNum,function(err,docs,total){
                     if(!err){
                         res.render('user',{
                             title:'用户信息',
@@ -162,7 +174,12 @@ module.exports =function(app){
                             userMsg:result[0],
                             success:req.flash('success').toString(),
                             error:req.flash('error').toString(),
-                            posts:docs
+                            posts:docs,
+                            page:page,
+                            isFirstPage:(page-1)==0,
+                            isLastPage:(((page-1)*pageNum)+docs.length)==total,
+                            total:Math.ceil(total/pageNum),
+                            current:500
                         });
                     }
                 });
@@ -178,15 +195,32 @@ module.exports =function(app){
                   req.flash('error',err);
                   return res.redirect("back");
               }
-            //res.json(doc);
             res.render('article',{
                 'title':'文章详情',
                 user:req.session.user,
                 success:req.flash('success').toString(),
                 error:req.flash('error').toString(),
-                posts:doc
+                posts:doc,
+                current:500
             });
         })
+    });
+    app.post('/article/:id',function(req,res){
+        var date =new Date();
+        var comment={
+            content:req.body.content,
+            time:date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
+            name:req.body.username
+        };
+      var newComment =new Comment(req.params["id"],comment);
+        newComment.save(function(err,result){
+            if(err){
+                req.flash('error',err);
+                return res.redirect("/article/"+req.params["id"]);
+            }
+            req.flash("success",'留言成功');
+            res.redirect("back");
+        });
     });
     app.get('/edit/:id',ckeckLogin);
     app.get('/edit/:id',function(req,res){
@@ -200,11 +234,49 @@ module.exports =function(app){
                 user:req.session.user,
                 success:req.flash('success').toString(),
                 error:req.flash('error').toString(),
-                post:doc
+                post:doc,
+                current:500
             });
         })
     });
-
+    app.post('/updata/:id',ckeckLogin);
+    app.post('/updata/:id',function(req,res,next){
+        Post.update(req.params["id"],{$set:{post:req.body.post}},function(err,result){
+            if(err){
+                req.flash('error',err);
+                return res.redirect("back");
+            }
+            req.flash("success","修改成功");
+            res.redirect('/article/'+req.params['id']);
+        })
+    });
+    app.get('/del/:id',ckeckLogin);
+    app.get('/del/:id',function(req,res,next){
+        Post.remove(req.params['id'],function(err, result){
+            if(err){
+                req.flash('error',err);
+                return res.redirect("back");
+            }
+            req.flash("success","删除成功");
+            res.redirect('/');
+        })
+    });
+    app.post("/search",function(req,res){
+        Post.search(req.body.key,function(err,docs){
+            if(err){
+                req.flash("error",err);
+                return res.redirect("back");
+            }
+            res.render('search',{
+                title:"搜索内容:"+req.body.key,
+                current:500,
+                posts:docs,
+                user:req.session.user,
+                success:req.flash("sucees").toString(),
+                error:req.flash("error").toString()
+            });
+        })
+    });
     function ckeckNotLogin(req,res,next){
         if(req.session.user){
             req.flash('error','已经登陆');

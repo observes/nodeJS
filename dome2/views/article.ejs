@@ -1,17 +1,51 @@
-<%- include header.ejs  %>
-
-<p>
-    <span><a href="/edit/<%- posts._id %>" class="edit">编辑</a></span>
-    <span><a href="/edit/<%- posts._id %>" class="edit">删除</a></span>
-</p>
-<p>
-    <h2>
-        <a href="/article/<%- posts._id %>"><%- posts.title %></a>
-    </h2>
-</p>
-<p class="info">
-    作者：<%- posts.name %>
-    日期：<%- posts.time.day %>
-</p>
-<p><%- posts.post %></p>
-<%- include footer.ejs%>
+<!doctype html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title><%= title %></title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<%- include nav.ejs %>
+<div class="container ">
+        <div>
+            <div class="thumbnail">
+                <div class="caption">
+                    <h4 class="clearfix">
+                        <a class="pull-left"  href="/article/<%- posts._id %>"><%- posts.title %></a>
+                        <p  class="pull-right">作者：<%- posts.name %>&emsp;发布日期：<%- posts.time.day %></p>
+                    </h4>
+                    <p><%- posts.post %></p>
+                    <p class="clearfix text-right text-danger">
+                        <span>阅读:<%= posts.pv %>&emsp;|&emsp;评论:<%= posts.comments.length %></span>
+                    </p>
+                    <% if(user &&(user== posts.name)){ %>
+                        <p>
+                            <a href="/edit/<%- posts._id %>" class="btn btn-primary" role="button">编辑</a>
+                            <a href="/del/<%- posts._id %>" class="btn btn-danger" role="button">删除</a>
+                        </p>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    <%- include comment.ejs %>
+    <%- include footer.ejs %>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

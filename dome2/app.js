@@ -44,5 +44,5 @@ if('development'==app.get("env")){
 }
 routes(app);
 http.createServer(app).listen(app.get("port"),function(){
-    console.log('在监听端口：'+app.get('port'));
+        console.log('listen to port'+app.get("port"));
 });

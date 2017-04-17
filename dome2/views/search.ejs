@@ -1,3 +1,6 @@
+<!doctype html>
+<html lang="en">
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
@@ -17,19 +20,27 @@
 <body>
 <%- include nav.ejs %>
 <div class="container ">
-    <div class="row">
-        <form action="/updata/<%= post._id %>" method="post">
-            <div class="form-group">
-                <label for="exampleTitle">标题</label>
-                <input type="text" name="title" class="form-control text-center" id="exampleTitle" value="<%= post.title %>" readonly style="width: 200px">
+    <% if(!posts.length){ %>
+        <div class="alert alert-danger">你搜索的关键词<%= title %>没有找到相关内容</div>
+    <% }else{%>
+        <div class="alert alert-success">你搜索的关键词<%= title %>,一共有<%= posts.length %>条</div>
+        <% posts.forEach(function(post,index) { %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title clearfix">
+                    <div class="pull-left"> <a href="/article/<%= post._id %>"><%= post.title %></a></div>
+                    <div class="pull-right">
+                        作者：<%= post.name %>&emsp;&emsp;
+                        日期：<%= post.time.day %>
+                    </div>
+                </h3>
             </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">文章正文</label>
-                <textarea name="post" style="width:100%; height:500px;"><%= post.post%></textarea>
+            <div class="panel-body">
+                <%- post.post %>
             </div>
-            <button type="submit" class="btn btn-primary">保存修改</button>
-        </form>
-    </div>
+        </div>
+    <% }) %>
+    <% } %>
     <%- include footer.ejs %>
 </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

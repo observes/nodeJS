@@ -1,0 +1,36 @@
+<% if(total != 0){ %>
+<nav aria-label="Page navigatio">
+    <ul class="pagination">
+
+            <% if(!isFirstPage){ %>
+                <li>
+                    <a href="?page=<%= page-1 %>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            <%}else {%>
+                <li class="disabled">
+                    <a href="javasrcipt:;" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            <% } %>
+            <% for(var i= 0;i< total;i++) { %>
+                <li><a href="?page=<%= i+1%>"><%= i+1 %></a></li>
+            <% } %>
+            <% if(!isLastPage){ %>
+                <li>
+                    <a href="?page=<%= page+1 %>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            <%}else { %>
+                <li class="disabled">
+                    <a href="javasrcipt:;" aria-label="Next" class="disabled">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            <% } %>
+    </ul>
+</nav>
+<% } %>

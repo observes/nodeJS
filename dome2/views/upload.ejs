@@ -1,8 +1,49 @@
-<%- include header.ejs%>
-<form action="/upload" method="post" enctype="multipart/form-data">
-    文件上传1：<input type="file" name="file"><br>
-    文件上传2：<input type="file" name="file"><br>
-    文件上传3：<input type="file" name="file"><br>
-    <input type="submit" value="上传">
-</form>
-<%- include footer.ejs%>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title><%= title %></title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<%- include nav.ejs %>
+<div class="container ">
+    <div class="row">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group  col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputFile">文件上传1</label>
+                <input id="exampleInputFile" type="file" name="file">
+                <p class="help-block "><span class="text-danger">请上传你需要的文件</span></p>
+            </div>
+            <div class="form-group  col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputFile2">文件上传2</label>
+                <input id="exampleInputFile2"  type="file" name="file">
+                <p class="help-block "><span class="text-danger">请上传你需要的文件</span></p>
+            </div>
+            <div class="form-group  col-md-6 col-sm-12 col-md-offset-3">
+                <label for="exampleInputFile3">文件上传3</label>
+                <input id="exampleInputFile2"  type="file" name="file">
+                <p class="help-block"><span class="text-danger">请上传你需要的文件</span></p>
+            </div>
+            <div class="form-group col-md-6 col-sm-12 col-md-offset-3">
+                <button type="submit" class="btn btn-primary">上传</button>
+            </div>
+        </form>
+    </div>
+    <%- include footer.ejs %>
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>
